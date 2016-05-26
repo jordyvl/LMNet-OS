@@ -229,7 +229,7 @@ function menu(items, title, start,allowNil,moreTitle)
 				end
 			elseif eventData[2] == keys.enter then
 				clear()
-				return items[selected]
+				return items[selected], selected
 			elseif eventData[2] == keys.left then
 				changePage(-1)
 			elseif eventData[2] == keys.right then
@@ -239,7 +239,7 @@ function menu(items, title, start,allowNil,moreTitle)
 			if eventData[4] > 5 then
 				clear()
 				selected = (eventData[4]-6+((page-1)*drawSize))+1
-				return items[selected]
+				return items[selected], selected
 			elseif eventData[4] == 5 then
 				if eventData[3] == 1 or eventData[3] == 2 then
 					changePage(-1)
@@ -419,6 +419,18 @@ function progressBar(pX,pY,pLen,pCol,pTxt)
 		term.setCursorPos((self.len/2)-1,self.y)
 		term.setBackgroundColor(colors.black)
 		write(tostring(self.percent)..' %')
+	end
+	
+	function rtn_m:progress( pProgress )
+		local progress
+		if pProgress <= 1 then
+			progress = pProgress*100	
+		else
+			progress = pProgress	
+		end
+		
+		self.percent = progress
+		self:draw()
 	end
 
 	return rtn
@@ -879,4 +891,100 @@ function listView(pid, pX, pY, pLen, pWide, tListItems)
 	end
 	
 	return rtn
+end
+
+function inGreen(pTxt)
+	term.setTextColor(8192)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inBrown(pTxt)
+	term.setTextColor(4096)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inBlack(pTxt)
+	term.setTextColor(32768)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inPink(pTxt)
+	term.setTextColor(64)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inYellow(pTxt)
+	term.setTextColor(16)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inOrange(pTxt)
+	term.setTextColor(2)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inMagenta(pTxt)
+	term.setTextColor(4)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inPurple(pTxt)
+	term.setTextColor(1024)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inCyan(pTxt)
+	term.setTextColor(512)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inRed(pTxt)
+	term.setTextColor(16384)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inWhite(pTxt)
+	term.setTextColor(1)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inLightBlue(pTxt)
+	term.setTextColor(8)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inLightGray(pTxt)
+	term.setTextColor(256)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inGray(pTxt)
+	term.setTextColor(128)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inLime(pTxt)
+	term.setTextColor(32)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inBlue(pTxt)
+	term.setTextColor(2048)
+	print(pTxt)
+	term.setTextColor(colors.white)
 end

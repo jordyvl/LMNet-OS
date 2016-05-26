@@ -141,6 +141,8 @@ local files = {
 	["src/usrbin/timemachine.lua"] = "usr/bin/timemachine",
 	["src/usrbin/2d.lua"] = "usr/bin/2d",
 	["src/usrbin/gists.lua"] = "usr/bin/gists",
+	["src/usrbin/record.lua"] = "usr/bin/record",
+	["src/usrbin/edt.lua"] = "usr/bin/edt",
 	["src/apis/config.lua"] = ".lmnet/apis/config",
 	["src/apis/git.lua"] = ".lmnet/apis/git",
 	["src/apis/packet.lua"] = ".lmnet/apis/packet",
@@ -148,6 +150,11 @@ local files = {
 	["src/apis/json.lua"] = ".lmnet/apis/json",
 	["src/apis/comgr.lua"] = ".lmnet/apis/comgr",
 	["src/lang/en.lang"] = ".lmnet/lang/en.lang",
+	["src/lang/nl.lang"] = ".lmnet/lang/nl.lang",
+	["src/lang/de.lang"] = ".lmnet/lang/de.lang",
+	["src/lang/es.lang"] = ".lmnet/lang/es.lang",
+	["src/lang/it.lang"] = ".lmnet/lang/it.lang",
+	["src/lang/fr.lang"] = ".lmnet/lang/fr.lang",
 	["src/lmnet/connor.lua"] = ".lmnet/connor.sys",
 }
 local fileCount = 0
@@ -188,6 +195,7 @@ for k, v in pairs(files) do
 	end
 	filesDownloaded = filesDownloaded + 1
 end
+get("timia2109", "down", "master", "down.lua", ".lmnet/apis/_down")
 clear()
 term.setCursorPos(2, 2)
 print("Creating missing directories...")

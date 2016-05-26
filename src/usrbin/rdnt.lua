@@ -4,8 +4,18 @@ for _, v in pairs(rs.getSides()) do
 	end
 end
 
+local siteLoaded = false
+local internalPage
+
 running = true
 rdnt = {}
+local rdntmgr = {}
+
+local function reloadCoroutineManager()
+	local coroutineManager = loadfile(".lmnet/apis/comgr")
+	setmetatable(rdntmgr, {__index = getfenv()})
+	setfenv(coroutineManager, rdntmgr)()
+end
 
 reDirect = rdnt.goto
 redirect = rdnt.goto
@@ -90,7 +100,7 @@ function rdnt.requestImpl(url)
 	rednet.broadcast(url)
 	local e = {rednet.receive(3)}
 	if e[2] ~= nil then
-		local file = fs.open("/.sitetmp", "w")
+		local file = fs.open(".sitetmp", "w")
 		file.write(e[2])
 		file.close()
 		return true
@@ -139,6 +149,7 @@ internalPages = {
 	end,
 	["exit"] = function()
 		running = false
+		rdntmgr.forceExit()
 	end,
 	["intpages"] = function()
 		rdnt.clear()
@@ -153,18 +164,19 @@ function main()
 	while running do
 		if siteLoaded then
 			siteLoaded = false
-			shell.run("/.sitetmp")
+			dofile(".sitetmp")
 		end
 		if internalPage then
 			internalPages[internalPage]()
 			internalPage = nil
 		end
-		sleep(0)
+		os.pullEvent()
 	end
 end
+
 function rdntCmd()
-	while true do
-		e = {os.pullEvent("key")}
+	while running do
+		e = {os.pullEvent()}
 		if e[1] == "key" then
 			if e[2] == keys.leftCtrl then
 				term.setCursorPos(1, 1)
@@ -179,16 +191,17 @@ function rdntCmd()
 				rdnt.goto(rdnt.tryURL)
 			end
 		end
-		sleep(0)
+		os.pullEvent()
 	end
 end
 
-local siteLoaded = false
-local internalPage
 rdnt.homeURL = "rdnt.home"
 rdnt.tryURL = ""
 rdnt.currentURL = ""
 rdnt.home()
-parallel.waitForAny(main, rdntCmd)
+reloadCoroutineManager()
+rdntmgr.addProcess(main)
+rdntmgr.addProcess(rdntCmd)
+rdntmgr.run()
 
 clear()

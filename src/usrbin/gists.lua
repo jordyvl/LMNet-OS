@@ -4,10 +4,14 @@ if not git then
 end
 
 local function toboolean(pI)
-	if pI == '1' or pI:lower() == 'true' or pI:lower() == 't' then
-		return true
-	else
-		return false
+	if pI ~= nil then
+		if pI == '1' or pI:lower() == 'true' or pI:lower() == 't' then
+			return true
+		else
+			return false
+		end
+	else 
+		return false 
 	end
 end
 
@@ -21,8 +25,8 @@ local function simpleReq(pUrl)
 end
 
 local function printUsage()
-	print_error("gists get <id> [<hide .lua (0,1)>] [<overwrite (0,1)>]")
-	print_error("gists put <file1> <filetwo>")
+	printError("gists get <id> [<hide .lua (0,1)>] [<overwrite (0,1)>]")
+	printError("gists put <file1> <filetwo>")
 end
 
 local function forkID(pId,pDel,pHide)
